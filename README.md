@@ -19,11 +19,10 @@ Cada bache tiene:
 
 ### Reglas de los estados
 
-"""
 Created --> Roasting --> Cooling --> Finished
 
 Created, Roasting o Cooling --> Cancelled
-"""
+
 
 - El flujo normal es `Created` -> `Roasting` -> `Cooling` -> `Finished`.
 - `Cancelled` se puede aplicar desde `Created`, `Roasting` o `Cooling`.
@@ -85,7 +84,7 @@ Ejemplo: `A create 150` hace que el hilo A cree un bache de 150 kg.
 
 Las líneas que empiezan con `[Hilo ...]` son la respuesta del programa.
 
-'''
+
 A create 150
 [Hilo A] creado bache #1
 B state 1 Roasting
@@ -100,7 +99,7 @@ B finished
 [Hilo B] Bache #1 | estado=Finished | inicial=150.00 kg | final=85.00 kg | merma=43.33 %
 A shrink 1
 [Hilo A] merma = 43.33 %
-'''
+
 
 El bache lo crea el hilo A, lo cambia de estado el hilo B y lo finaliza el hilo A. Los dos hilos trabajan sobre el mismo almacén de datos.
 
