@@ -1,4 +1,4 @@
-# luisa fernanda hernandez baena Prisma  (C++)
+# luisa fernanda hernandez baena   (control de una tostadora de café)
 
 Simulación del control de una tostadora de café que trabaja por **baches**. El programa está compuesto por **dos hilos independientes** que funcionan al mismo tiempo y comparten los mismos datos sobre cada bache, sin interferir uno con el otro. Los eventos de creación, edición y consulta se inyectan por consola mediante comandos.
 
@@ -10,12 +10,15 @@ Una tostadora transforma, en cada bache, una cantidad X de café verde en una ca
 
 Cada bache tiene:
 
-| Campo | Descripción |
+ Campo  Descripción 
 
--| Identificador | Número único, asignado automáticamente al crear el bache |
--| Peso inicial | Kilos de café verde |
--| Peso final | Kilos de café tostado. Es opcional porque no se conoce hasta que termina el tueste |
--| Estado | `Created`, `Roasting`, `Cooling`, `Finished` o `Cancelled` |
+-| Identificador |   Número único, asignado automáticamente al crear el bache 
+
+-| Peso inicial| Kilos de café verde 
+
+-| Peso final | Kilos de café tostado. Es opcional porque no se conoce hasta que termina el tueste 
+
+-| Estado | `Created`, `Roasting`, `Cooling`, `Finished` o `Cancelled` 
 
 ### Reglas de los estados
 
@@ -67,17 +70,24 @@ hilo --  comando datos
 
 Ejemplo: `A create 150` hace que el hilo A cree un bache de 150 kg.
 
-### Comandos disponibles
+## Comandos disponibles
 
 | Comando | Descripción |
 
 -| `create <peso_kg>` | Crea un bache nuevo con ese peso inicial |
+
 -| `get <id>` | Consulta un bache por su identificador |
+
 -| `state <id> <estado>` | Cambia el estado (`Created`, `Roasting`, `Cooling`, `Finished`, `Cancelled`) |
+
 -| `final <id> <peso_kg>` | Registra el peso final del bache |
+
 -| `finished` | Lista todos los baches finalizados |
+
 -| `shrink <id>` | Calcula la merma porcentual de un bache |
+
 -| `help` | Muestra la ayuda (sin prefijo de hilo) |
+
 -| `quit` | Termina el programa (sin prefijo de hilo) |
 
 ### Ejemplo de sesión
@@ -87,33 +97,43 @@ Las líneas que empiezan con `[Hilo ...]` son la respuesta del programa.
 
 -A create 150
 [Hilo A] creado bache #1
+
 -B state 1 Roasting
 [Hilo B] bache #1 -> Roasting
+
 -A final 1 85
 [Hilo A] peso final registrado
+
 -B state 1 Cooling
 [Hilo B] bache #1 -> Cooling
+
 -A state 1 Finished
 [Hilo A] bache #1 -> Finished
+
 -B finished
 [Hilo B] Bache #1 | estado=Finished | inicial=150.00 kg | final=85.00 kg | merma=43.33 %
+
 -A shrink 1
 [Hilo A] merma = 43.33 %
 
 
 El bache lo crea el hilo A, lo cambia de estado el hilo B y lo finaliza el hilo A. Los dos hilos trabajan sobre el mismo almacén de datos.
 
-### Ejemplos de errores controlados
+## Ejemplos de errores controlados
 
 
 -A create 50
 [Hilo A] creado bache #2
+
 -B state 2 Finished
 [Hilo B] transicion invalida: Created -> Finished
+
 -A state 2 hola
 [Hilo A] estado desconocido: hola
+
 -A final 2 80
 [Hilo A] error: peso final invalido
+
 -B get 99
 [Hilo B] bache no existe
 
@@ -134,10 +154,15 @@ El bache lo crea el hilo A, lo cambia de estado el hilo B y lo finaliza el hilo 
 
 src/
  -batch.hpp          Modelo de datos: Batch, BatchState y conversiones de estado
+ 
  - batch_store.hpp    Almacén de baches con reglas de negocio y mutex
+   
  -command_queue.hpp  Cola bloqueante de comandos (mutex + condition_variable)
+ 
  -worker.hpp         Bucle de cada hilo e interpretación de los comandos
+ 
  -main.cpp           Lectura de consola y arranque de los hilos
+ 
 CMakeLists.txt       Configuración de la compilación
 
 
