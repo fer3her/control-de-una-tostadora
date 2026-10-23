@@ -56,10 +56,10 @@ cmake --build build
 
 Cada comando sigue este formato:
 
-'''
-hilo  comando datos
 
-'''
+hilo --  comando datos
+
+
 
 - `<hilo>`: `A` o `B`, el hilo que ejecuta el comando (también se acepta en minúscula).
 - `<comando>`: la operación a realizar (ver la tabla de abajo).
@@ -105,7 +105,7 @@ El bache lo crea el hilo A, lo cambia de estado el hilo B y lo finaliza el hilo 
 
 ### Ejemplos de errores controlados
 
-'''
+
 A create 50
 [Hilo A] creado bache #2
 B state 2 Finished
@@ -116,7 +116,7 @@ A final 2 80
 [Hilo A] error: peso final invalido
 B get 99
 [Hilo B] bache no existe
-'''
+
 
 
 ### Decisiones de diseño
@@ -131,7 +131,7 @@ B get 99
 
 ## Estructura del proyecto
 
-'''
+
 src/
   batch.hpp          Modelo de datos: Batch, BatchState y conversiones de estado
   batch_store.hpp    Almacén de baches con reglas de negocio y mutex
@@ -139,11 +139,11 @@ src/
   worker.hpp         Bucle de cada hilo e interpretación de los comandos
   main.cpp           Lectura de consola y arranque de los hilos
 CMakeLists.txt       Configuración de la compilación
-'''
+
 
 ## Nota sobre concurrencia
 
-'''
+
 Como los hilos A y B corren en paralelo, si se escriben varios comandos dependientes muy seguidos (por ejemplo, cambiar el estado de un bache que acaba de crearse), el orden en que los ejecutan los dos hilos no está garantizado. 
 
 Es el comportamiento esperado de la concurrencia real. Para comprobar el flujo paso a paso, conviene escribir los comandos de uno en uno
